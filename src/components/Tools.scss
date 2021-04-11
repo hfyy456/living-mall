@@ -1,0 +1,71 @@
+.show{
+  animation: slideIn 1s;
+  transform: translateX(0%);
+}
+@keyframes slideOut{
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+.hide {
+  transform: translateX(100%);
+
+  animation: slideOut 1s;
+}
+.tools-container {
+  position: fixed;
+  right: 0%;
+  bottom: 5%;
+  @import '../themes/theme.scss';
+
+  .action-button {
+    @include themify($themes) {
+      background: themed('fontColor');
+      color:themed('bgColor')
+    }
+    margin-bottom: 2px;
+    i{
+      display: block;
+      margin:.3rem;
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+    }
+  }
+  .rotate{
+    animation: selfRotate 2s infinite linear;
+  }
+  @keyframes selfRotate{
+    from{
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  button {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    outline: 0;
+    border: none;
+    background: 0 0;
+
+    &:hover{
+      opacity: .80;
+    }
+  }
+}
+@keyframes slideIn{
+  from{
+    transform: translateX(100%);
+ 
+  }
+  to{
+    transform: translateX(0%);
+  }
+}

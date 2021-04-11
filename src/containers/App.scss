@@ -1,0 +1,75 @@
+@import '../static/icons/iconfont.css';
+
+#router-wrapper {
+  overflow: hidden;
+
+}
+
+.forward-enter {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.forward-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms;
+}
+
+.forward-exit {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.forward-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 500ms;
+}
+
+.back-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.back-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 500ms;
+}
+
+.back-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.back-exit-active {
+  opacity: 0;
+  transform: translate(100%);
+  transition: all 500ms;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  
+}
+html{
+  font-size: 20px;
+  @media screen  and (max-width:768px){
+      font-size: 16px;
+  }
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: gray;
+}
+
+::selection {
+  background-color: #f0534e;
+}

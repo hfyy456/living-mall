@@ -1,0 +1,101 @@
+@import '../themes/theme.scss';
+
+.card-container {
+  display: flex;
+  border-radius: 12px 8px 8px 12px;
+  box-shadow: 0 4px 8px 6px rgba(7, 17, 27, .06);
+  height: 18.5rem;
+  width: 1280px;
+
+  @include themify($themes) {
+    background-color: themed('pureColor');
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px 12px rgba(7, 17, 27, .15);
+  }
+
+  @media screen and (max-width:1280px) {
+    width: 95vw;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 95vw;
+    height: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+
+.card-cover {
+  width: 45%;
+  overflow: hidden;
+  margin: 1px;
+  border-radius: 12px 0px 0px 12px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 15rem;
+    border-radius: 12px 8px 0px 0px;
+
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: all .8s;
+
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+
+.card-info {
+  width: 55%;
+  padding: 3%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  .arti-title {
+    text-align: center;
+    font-size: 1.6rem;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      margin-top: 5%;
+      margin-bottom: 5%;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      @include themify($themes) {
+        color: themed('activeColor');
+      }
+    }
+  }
+
+  .arti-preview {
+    font-size: 1rem;
+  }
+
+  .arti-date {
+    margin-top: 5%;
+    font-size: 1.1rem;
+    color: #858585;
+  }
+
+  .link-active {
+    text-decoration: none;
+
+    @include themify($themes) {
+      color: themed('fontColor');
+    }
+  }
+}

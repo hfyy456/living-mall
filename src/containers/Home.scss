@@ -1,0 +1,19 @@
+@import '../themes/theme.scss';
+
+.home-page {
+  overflow: hidden;
+  @include themify($themes) {
+    background: themed('bgColor');
+    color:themed('fontColor')
+  }
+}
+
+.post-list {
+  display: flex;
+  margin:3vh 0 0 0;
+  justify-content: center;
+  flex-wrap: wrap;
+ .post-item{
+   margin-bottom:3vh;
+ }
+}

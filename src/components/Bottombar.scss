@@ -1,0 +1,9 @@
+@import '../themes/theme.scss';
+
+.bottombar-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  overflow: hidden;
+}

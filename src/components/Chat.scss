@@ -1,0 +1,22 @@
+.chat-container {
+  position: absolute;
+  bottom: 8%;
+  color: #fff;
+  overflow: auto;
+  width: 60%;
+  height: 30%;
+  z-index: 9;
+
+  .message-item {
+    font-size: 12px;
+    border-radius: 5%;
+    margin: 5%;
+    padding: 3%;
+    background-color: rgba(0, 0, 0, .5);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
