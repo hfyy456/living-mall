@@ -1,6 +1,13 @@
 .video {
   width: 100vw;
   height: 100vh;
+
+  video {
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
 }
 
 .room-container {

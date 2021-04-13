@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Controls.scss'
 import Avatar from '@material-ui/core/Avatar';
 import Drawer from '@material-ui/core/Drawer';
@@ -32,7 +32,8 @@ export default function Controls(): JSX.Element {
   const history = useHistory();
   const [cardShow, setCardShow] = useState(true)
   const [shopShow, setShopShow] = useState(false)
-
+  const [inputValue, setInputValue] = useState('')
+  const chatRef = useRef({ sendMsg: function (msg: any, data: any) { } })
   const handleOnClose = () => {
     history.push(`/`)
   }
@@ -41,6 +42,11 @@ export default function Controls(): JSX.Element {
   }
   const toggleDrawer = (pos: any, bool: Boolean) => {
     setShopShow(false)
+  }
+  const handleSubmit = () => {
+    chatRef.current.sendMsg('message', {
+      content: inputValue
+    })
   }
   return (
     <div className='controls'>
@@ -80,11 +86,14 @@ export default function Controls(): JSX.Element {
           </IconButton >
         </CardActions>
       </Card> : null}
-      <Chat />
+      <Chat ref={chatRef} />
       <div className="bottom-actions">
         <div className="input-container">
-          <input placeholder='和主播说点什么...' />
-          <Button variant="contained" color="secondary" size="small" className={'button'} >
+          <input onChange={(e) => {
+            var val = e.target.value
+            setInputValue(val)
+          }} placeholder='和主播说点什么...' />
+          <Button onClick={handleSubmit} variant="contained" color="secondary" size="small" className={'button'} >
             发送
           </Button>
         </div>
