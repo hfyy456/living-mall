@@ -3,7 +3,6 @@ import './App.scss';
 import { selectLoading, selectTheme, setLoading } from '../store/reducers/configSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
-import Header from '../components/Header';
 import Tools from '../components/Tools';
 import Loading from '../components/Loading'
 import Bottombar from '../components/Bottombar'
@@ -25,7 +24,6 @@ function App(props: Props) {
     <>
       <Loading loading={loading} mode={theme} />
       <div className={'theme-' + theme}>
-        {path.pathname === '/' ? <Header /> : null}
         {children}
         <Tools />
         {path.pathname.indexOf('/room') === -1 ? <Bottombar />
