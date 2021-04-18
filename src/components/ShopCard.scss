@@ -1,0 +1,30 @@
+.shop-card-container{
+  border: 1px solid #e5e5e5;
+  background: #ffffff;
+  border-radius: 5px;
+  margin: 2vw;
+  display: flex;
+  padding: 4vw 10vw;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow:
+    0 0px 0.9px rgba(0, 0, 0, 0.036),
+    0 0px 3.1px rgba(0, 0, 0, 0.054),
+    0 0px 14px rgba(0, 0, 0, 0.09);
+
+  img {
+    height: 15vw;
+    width: 15vw;
+  }
+  section{
+    margin: 0 1vw;
+  }
+  .shop-name {
+    font-weight: bold;
+    margin-bottom:1.2vh;
+  }
+  
+  .shop-follow {
+    font-size: 14px;
+  }
+}

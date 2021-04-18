@@ -1,9 +1,11 @@
 import React from 'react'
 import App from './App'
 import { Route, Switch, useLocation } from 'react-router-dom'
-import About from './AboutPage'
+import Profile from './ProfilePage'
 import Home from './HomePage'
 import Room from './RoomPage'
+import Good from './GoodPage'
+
 import Explore from './ExplorePage'
 import './App.scss'
 
@@ -12,10 +14,11 @@ export default function RootRoute() {
   return (
     <App>
       <Switch location={location}>
-        <Route path='/about' component={About} />
+        <Route path='/profile/:id' component={Profile} />
         <Route exact path='/' component={Home} />
         <Route path='/room/:id' component={Room} />
         <Route path='/explore' component={Explore} />
+        <Route path='/good/:id' component={Good} />
       </Switch>
     </App>
   )

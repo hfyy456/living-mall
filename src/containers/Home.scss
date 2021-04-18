@@ -12,9 +12,13 @@
   .title {
     font-size: 14px;
     font-weight: bold;
+    margin:2vw;
   }
 }
 
+.viewer {
+  height: 100vh;
+}
 
 .post-list {
   display: flex;

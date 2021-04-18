@@ -5,9 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
-import Living from '../components/Living'
 import './Home.scss'
+import Concern from './ConcernPage'
+import Featured from './FeaturedPage'
+import Local from './LocalPage'
 import service from '../utils/fetch'
 import { useDispatch } from 'react-redux';
 import { setLoaded } from '../store/reducers/configSlice'
@@ -68,8 +69,10 @@ export default function Home() {
     setValue(index);
   };
   useEffect(() => {
+
     let params = {
     }
+
     service.post('article/list', params).then((res: any) => {
       setPostList(res.data)
       dispatch(setLoaded())
@@ -99,22 +102,20 @@ export default function Home() {
           </Tabs>
         </div>
         <SwipeableViews
+          className="viewer"
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={value}
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <div className="title">
-              <span>正在直播中</span>
-            </div>
-            <Living />
+            <Concern />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
-        </TabPanel>
+            <Featured />
+          </TabPanel>
           <TabPanel value={value} index={2} dir={theme.direction}>
-            Item Three
-        </TabPanel>
+            <Local />
+          </TabPanel>
         </SwipeableViews>
       </main>
     </>

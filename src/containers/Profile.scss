@@ -1,0 +1,101 @@
+.proflie-container {
+  background: #f5f5f5;
+  width: 100vw;
+  height: calc(100vh - 56px);
+  overflow: auto;
+  .personal-infor {
+    padding: 4vw 6vw;
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      height: 15vw;
+      width: 15vw;
+      border-radius: 50%;
+    }
+
+    .setting {
+      margin-left: auto;
+
+    }
+
+    .sec {
+      margin-left: 3vw;
+
+      * {
+        margin: 2px;
+      }
+
+      .username {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .desc {
+        font-size: 14px;
+        color: gray;
+        font-weight: bold;
+
+      }
+
+      .level {
+        font-size: 12px;
+        font-weight: bold;
+
+        color: red;
+      }
+    }
+  }
+
+  .order-card {
+
+    padding: 5vw 5vw;
+    margin: 0 2vw;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow:
+      0 0px 0.9px rgba(0, 0, 0, 0.036),
+      0 0px 3.1px rgba(0, 0, 0, 0.054),
+      0 0px 14px rgba(0, 0, 0, 0.09);
+
+    .sub-list {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+
+      .sub-item {
+        font-size: 16px;
+        margin-bottom: 4vw;
+
+        * {
+          vertical-align: middle;
+        }
+
+        span {
+          margin-left: 1vw;
+        }
+      }
+    }
+
+    .order-list {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-top: 4vw;
+      justify-content: space-around;
+    }
+
+    .type {
+      text-align: center;
+
+      .name {
+        font-size: 14px;
+      }
+
+      svg {
+        width: 1.3em;
+        height: 1.3em;
+      }
+    }
+  }
+}

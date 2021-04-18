@@ -15,7 +15,6 @@ export default function Explore() {
   }, [])
   return (
     <div className='about-container'>
-      <Topbar />
       <div className='content'>
         <section>
           <h4>关于我</h4>

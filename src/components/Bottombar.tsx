@@ -15,6 +15,8 @@ export default function Bottombar(): JSX.Element {
     var path = location.pathname
     if (path.indexOf('explore') != '-1') {
       setValue("explore")
+    } else if (path.indexOf('profile') != '-1') {
+      setValue("profile")
     } else {
       setValue("home")
     }
@@ -23,8 +25,8 @@ export default function Bottombar(): JSX.Element {
   const handleChange = (e: any, newValue: any) => {
     setValue(newValue);
   };
-  const navigateTo = (path: any) => {
-    history.push(`/${path}`)
+  const navigateTo = (path: any, value = '') => {
+    history.push(`/${path}${value != '' ? '/' + value : ''}`)
   };
   return (
     <div className="bottombar-container" >
@@ -36,7 +38,7 @@ export default function Bottombar(): JSX.Element {
         <BottomNavigationAction label="首页" value='home' onClick={(e) => navigateTo('')} icon={<HomeIcon />} />
         <BottomNavigationAction label="探索" value='explore' onClick={(e) => navigateTo('explore')} icon={<TrackChangesIcon />} />
         <BottomNavigationAction label="消息" value='message' onClick={(e) => navigateTo('message')} icon={<MessageIcon />} />
-        <BottomNavigationAction label="我的" value='profile' onClick={(e) => navigateTo('profile')} icon={<PersonIcon />} />
+        <BottomNavigationAction label="我的" value='profile' onClick={(e) => navigateTo('profile', '1')} icon={<PersonIcon />} />
       </BottomNavigation>
     </div>
   )
