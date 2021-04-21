@@ -15,10 +15,11 @@ export default function Room(): JSX.Element {
   useEffect(() => {
     console.log(params)
     var player = videojs('video-player')
+    
     setTimeout(() => {
       dispatch(setLoaded())
 
-      //player.play()
+        //player.play()
 
     }, 1000);
   }, [])
