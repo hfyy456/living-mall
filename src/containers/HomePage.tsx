@@ -6,10 +6,11 @@ import Box from '@material-ui/core/Box';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './Home.scss'
+import io from 'socket.io-client'
 import Concern from './ConcernPage'
 import Featured from './FeaturedPage'
 import Local from './LocalPage'
-import service from '../utils/fetch'
+import service_ad from '../utils/fetch_ad'
 import { useDispatch } from 'react-redux';
 import { setLoaded } from '../store/reducers/configSlice'
 function a11yProps(index: number) {
@@ -69,15 +70,21 @@ export default function Home() {
     setValue(index);
   };
   useEffect(() => {
-
-    let params = {
+    setTimeout(() => {
+      dispatch(setLoaded())
+    }, 300);
+    var namespace = 'http://127.0.0.1:5000/home'
+    var socket = io(namespace);
+    socket.on('connect', function () {
+      socket.emit('my_event', { data: 'I\'m connected!' });
+    });
+    socket.on('my_response', function (msg: any) {
+      console.log(msg)
+    })
+    return () => {
+      socket.close()
     }
 
-    service.post('article/list', params).then((res: any) => {
-      setPostList(res.data)
-      dispatch(setLoaded())
-
-    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

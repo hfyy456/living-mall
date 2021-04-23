@@ -26,7 +26,7 @@ function App(props: Props) {
     } else {
       setShowNav(true)
     }
-    dispatch(setLoading())
+ //   dispatch(setLoading())
 
   }, [path])
   return (

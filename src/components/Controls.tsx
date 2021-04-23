@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import ForwardIcon from '@material-ui/icons/Forward';
-
+import { useParams } from 'react-router';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import { useHistory } from 'react-router-dom'
@@ -17,7 +17,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Chat from './Chat'
-
+interface Iparams {
+  id: string
+}
 const useStyles = makeStyles((theme) => ({
   paperAnchorBottom: {
     maxHeight: '45vh'
@@ -26,14 +28,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'block'
   }
 }));
-export default function Controls(): JSX.Element {
+export default function Controls(props: any): JSX.Element {
+  const { socket } = props
+  const params: Iparams = useParams()
+  const id = params.id
   const classes = useStyles();
-
   const history = useHistory();
   const [cardShow, setCardShow] = useState(true)
   const [shopShow, setShopShow] = useState(false)
+  const [info, setInfo] = useState({ owner: 'null', currentViewers: 0 })
   const [inputValue, setInputValue] = useState('')
-  const chatRef = useRef({ sendMsg: function (msg: any, data: any) { } })
+  useEffect(() => {
+    socket.on('info', function (msg: any) {
+      const res = JSON.parse(msg)
+      setInfo(res.data.info)
+    })
+  }, [])
   const handleOnClose = () => {
     history.push(`/`)
   }
@@ -44,9 +54,8 @@ export default function Controls(): JSX.Element {
     setShopShow(false)
   }
   const handleSubmit = () => {
-    chatRef.current.sendMsg('message', {
-      content: inputValue
-    })
+
+    socket.emit('message', { data: { room: id, content: inputValue, username: 'sdaasdasd' } })
   }
   return (
     <div className='controls'>
@@ -54,8 +63,8 @@ export default function Controls(): JSX.Element {
         <div className='anchor-card'>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={"avatar"} />
           <div className="information">
-            <div>主播名字</div>
-            <div><span>1000人气</span></div>
+            <div>{info.owner}</div>
+            <div><span>{info.currentViewers}</span></div>
           </div>
           <Button variant="contained" color="secondary" size="small" className={'button'} >
             关注
@@ -86,7 +95,7 @@ export default function Controls(): JSX.Element {
           </IconButton >
         </CardActions>
       </Card> : null}
-      <Chat ref={chatRef} />
+      <Chat socket={socket} />
       <div className="bottom-actions">
         <div className="input-container">
           <input onChange={(e) => {
