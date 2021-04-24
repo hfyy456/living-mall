@@ -10,13 +10,23 @@ class Xfetch {
   async post(api: any, params: any) {
     let url = this.baseUrl + api
     let data = JSON.stringify(params)
-    console.log(data)
+    const token = localStorage.getItem('token')
+    var headers
+    if (token) {
+      headers = {
+        'content-type': 'application/json',
+        'Authorization': token,
+      }
+    }
+    else {
+      headers = {
+        'content-type': 'application/json',
+      }
+    }
     return fetch(url, {
       body: data,
       method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      },
+      headers: headers
     }).then(respose => respose.json())
   }
   async get(api: any, params: any) {

@@ -16,4 +16,17 @@
   background: #171a21;
   display: flex;
   align-items: center;
+
+
+}
+
+.modal {
+  width: 50vw;
+  height: 15vh;
+  margin: auto;
+text-align: center;
+  position: fixed;
+  left:50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }

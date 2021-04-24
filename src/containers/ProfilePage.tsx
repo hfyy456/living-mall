@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {
+  selectUserInfo
+} from '../store/reducers/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoaded } from '../store/reducers/configSlice'
 import './Profile.scss'
 import Basket from '../components/Basket'
@@ -12,17 +15,28 @@ import HistoryIcon from '@material-ui/icons/History';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import PagesIcon from '@material-ui/icons/Pages';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
-
 import Divider from '@material-ui/core/Divider';
+import service from '../utils/fetch'
 
 export default function Profile() {
   const dispatch = useDispatch()
-
+  const [userInfo, setUserInfo] = useState({
+    username: '',
+    desc: '',
+    level: '',
+    avatar: '',
+  })
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(setLoaded())
+    service.post('user/info', {}).then((res: any) => {
+      const code = res.code
+      if (code == 20000) {
+        setUserInfo(res.data)
+        localStorage.setItem('username', res.data.username)
 
-    }, 1000);
+      } else {
+
+      }
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
@@ -32,9 +46,9 @@ export default function Profile() {
           <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" className="avatar"></img>
         </div>
         <div className="sec">
-          <div className="username">用户名</div>
-          <div className="desc">yonghuming</div>
-          <div className="level">Lv.12</div>
+          <div className="username">{userInfo.username}</div>
+          <div className="desc">{userInfo.desc}</div>
+          <div className="level">Lv.{userInfo.level}</div>
         </div>
         <SettingsIcon className="setting" />
       </div>
@@ -80,6 +94,6 @@ export default function Profile() {
         </div>
       </div>
       <Basket />
-      </div>
+    </div>
   )
 }

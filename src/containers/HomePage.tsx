@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import {
+  selectUserInfo
+} from '../store/reducers/userSlice';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -10,8 +13,7 @@ import io from 'socket.io-client'
 import Concern from './ConcernPage'
 import Featured from './FeaturedPage'
 import Local from './LocalPage'
-import service_ad from '../utils/fetch_ad'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoaded } from '../store/reducers/configSlice'
 function a11yProps(index: number) {
   return {
@@ -61,6 +63,7 @@ export default function Home() {
   const theme = useTheme();
   const classes = useStyles();
   const classes_tabs = useStyles_tabs();
+  const userInfo = useSelector(selectUserInfo);
 
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
@@ -70,6 +73,7 @@ export default function Home() {
     setValue(index);
   };
   useEffect(() => {
+    console.log(userInfo)
     setTimeout(() => {
       dispatch(setLoaded())
     }, 300);

@@ -3,11 +3,12 @@ import { useParams } from 'react-router';
 import './room.scss'
 import videojs from 'video.js';
 import Modal from '@material-ui/core/Modal';
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { setLoaded } from '../store/reducers/configSlice'
 import Controls from '../components/Controls'
 import Paper from '@material-ui/core/Paper';
 import io from 'socket.io-client'
+import Button from '@material-ui/core/Button';
 
 interface Iparams {
   id: string
@@ -15,7 +16,9 @@ interface Iparams {
 export default function Room(): JSX.Element {
   const params: Iparams = useParams()
   const id = params.id
-  const dispatch = useDispatch()
+  const username = localStorage.getItem("username")
+  const history = useHistory()
+
   let socket: any = null
   let url = ''
   var namespace = 'http://127.0.0.1:5000/room'
@@ -30,13 +33,15 @@ export default function Room(): JSX.Element {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleBack = ()=>{
+    history.goBack()
+  }
   useEffect(() => {
     console.log(params)
     var player = videojs('video-player')
 
     socket.on('connect', function () {
-      socket.emit('join', { data: { username: 'user001', room: id } });
+      socket.emit('join', { data: { username: username, room: id } });
       socket.emit('info', { data: { room: id } })
     });
     socket.on('living', function (msg: any) {
@@ -47,12 +52,15 @@ export default function Room(): JSX.Element {
       if (isLiving) {
         console.log("++++++ living open ++++")
         if (url != newUrl) {
+          setOpen(false)
+
           player.src(newUrl)
           player.play()
           url = newUrl
         }
 
       } else {
+        setOpen(true)
         console.log("++++++ living close ++++")
         player.pause()
         url = "www.izhaoo.com/live"
@@ -66,10 +74,14 @@ export default function Room(): JSX.Element {
       const isLiving = res.data.info.living
       const newUrl = res.data.info.url
       if (isLiving) {
+        setOpen(false)
         url = newUrl
         console.log(newUrl)
         player.src(newUrl)
         player.play()
+      } else {
+        setOpen(true)
+
       }
     })
     return () => {
@@ -83,7 +95,14 @@ export default function Room(): JSX.Element {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-      ><Paper>主播已下播,即将退出直播间</Paper>
+      ><Paper className="modal">
+          <p>
+            主播已停止直播。
+          </p>
+          <div> <Button onClick={handleBack} className="submit" variant="contained" color="secondary">
+            返回
+        </Button></div>
+        </Paper>
       </Modal>
       <Controls socket={socket} />
       <video id='video-player' className='video-js vjs-default-skin video'>

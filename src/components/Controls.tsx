@@ -32,17 +32,31 @@ export default function Controls(props: any): JSX.Element {
   const { socket } = props
   const params: Iparams = useParams()
   const id = params.id
+  const username = localStorage.getItem("username")
   const classes = useStyles();
   const history = useHistory();
-  const [cardShow, setCardShow] = useState(true)
+  const [cardShow, setCardShow] = useState(false)
   const [shopShow, setShopShow] = useState(false)
+  const [cardInfo, setCardInfo] = useState({
+    name: '',
+    images: [],
+    price: '',
+  })
+
   const [info, setInfo] = useState({ owner: 'null', currentViewers: 0 })
   const [inputValue, setInputValue] = useState('')
   useEffect(() => {
+    socket.on('card', function (msg: any) {
+      console.log("+++++ card +++++")
+      const res = JSON.parse(msg)
+      setCardInfo(res.data.data)
+      setCardShow(true)
+    })
     socket.on('info', function (msg: any) {
       const res = JSON.parse(msg)
       setInfo(res.data.info)
     })
+
   }, [])
   const handleOnClose = () => {
     history.push(`/`)
@@ -55,7 +69,7 @@ export default function Controls(props: any): JSX.Element {
   }
   const handleSubmit = () => {
 
-    socket.emit('message', { data: { room: id, content: inputValue, username: 'sdaasdasd' } })
+    socket.emit('message', { data: { room: id, content: inputValue, username: username } })
   }
   return (
     <div className='controls'>
@@ -79,14 +93,14 @@ export default function Controls(props: any): JSX.Element {
           <CloseIcon />
         </IconButton>
         <CardMedia
-          image="https://material-ui.com/static/images/cards/paella.jpg"
+          image={cardInfo.images[0]}
           title="Paella dish"
           className="good-cover"
         />
         <div>
-          <div className="good-name">啊大苏打实打实的撒打算</div>
+          <div className="good-name">{cardInfo.name}</div>
           <div className="good-price">
-            ￥2,000
+            ￥{cardInfo.price}
           </div>
         </div>
         <CardActions className='card-actions' disableSpacing>

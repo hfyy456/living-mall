@@ -23,11 +23,13 @@ function App(props: Props) {
       setShowNav(false)
     } else if (path.pathname.indexOf('/good') !== -1) {
       setShowNav(false)
-    } else {
+    } else if (path.pathname.indexOf('/login') !== -1) {
+      setShowNav(false)
+    }
+    else {
       setShowNav(true)
     }
- //   dispatch(setLoading())
-
+    //   dispatch(setLoading())
   }, [path])
   return (
     <>

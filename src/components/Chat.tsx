@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useState, useImperativeHandle } from 'react';
 import './Chat.scss'
 function Chat(props: any) {
+
   const { socket } = props
   let msgList: Array<any> = [{ type: 'notify', content: '欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！' }]
   const [msgs, SetMsgs] = useState([{ type: 'notify', content: '欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！欢迎来到本直播间！' }])

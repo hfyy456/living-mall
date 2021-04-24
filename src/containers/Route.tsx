@@ -5,6 +5,7 @@ import Profile from './ProfilePage'
 import Home from './HomePage'
 import Room from './RoomPage'
 import Good from './GoodPage'
+import Login from './LoginPage'
 
 import Explore from './ExplorePage'
 import './App.scss'
@@ -17,6 +18,8 @@ export default function RootRoute() {
         <Route path='/profile/:id' component={Profile} />
         <Route exact path='/' component={Home} />
         <Route path='/room/:id' component={Room} />
+        <Route path='/login' component={Login} />
+
         <Route path='/explore' component={Explore} />
         <Route path='/good/:id' component={Good} />
       </Switch>
