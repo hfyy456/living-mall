@@ -3,7 +3,7 @@ import './Controls.scss'
 import Avatar from '@material-ui/core/Avatar';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-
+import service from '../utils/fetch'
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -41,6 +41,7 @@ export default function Controls(props: any): JSX.Element {
     name: '',
     images: [],
     price: '',
+    id: '',
   })
 
   const [info, setInfo] = useState({ owner: 'null', currentViewers: 0 })
@@ -70,6 +71,14 @@ export default function Controls(props: any): JSX.Element {
   const handleSubmit = () => {
 
     socket.emit('message', { data: { room: id, content: inputValue, username: username } })
+  }
+  const addCart = () => {
+    var params = {
+      goodId: cardInfo.id
+    }
+    service.post('basket/addCart', params).then((res: any) => {
+
+    })
   }
   return (
     <div className='controls'>
@@ -104,7 +113,7 @@ export default function Controls(props: any): JSX.Element {
           </div>
         </div>
         <CardActions className='card-actions' disableSpacing>
-          <IconButton className="shop-cart-button" aria-label="add to favorites">
+          <IconButton onClick={addCart} className="shop-cart-button" aria-label="add to favorites">
             <ShoppingCartIcon />
           </IconButton >
         </CardActions>
