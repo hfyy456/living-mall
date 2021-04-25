@@ -16,18 +16,18 @@ function App(props: Props) {
   const dispatch = useDispatch()
   const loading = useSelector(selectLoading)
   const theme: string = useSelector(selectTheme)
-  const [showNav, setShowNav] = useState(true)
+  const [showNav, setShowNav] = useState(false)
   const { children } = props;
   useEffect(() => {
-    if (path.pathname.indexOf('/room') !== -1) {
-      setShowNav(false)
-    } else if (path.pathname.indexOf('/good') !== -1) {
-      setShowNav(false)
-    } else if (path.pathname.indexOf('/login') !== -1) {
-      setShowNav(false)
+    if (path.pathname=='/') {
+      setShowNav(true)
+    } else if (path.pathname.indexOf('/explore') !== -1) {
+      setShowNav(true)
+    } else if (path.pathname.indexOf('/profile') !== -1) {
+      setShowNav(true)
     }
     else {
-      setShowNav(true)
+      setShowNav(false)
     }
     //   dispatch(setLoading())
   }, [path])
