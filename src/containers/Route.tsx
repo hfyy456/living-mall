@@ -16,12 +16,12 @@ export default function RootRoute() {
   return (
     <App>
       <Switch location={location}>
+        <Route path='/finish' component={Finish} />
+        <Route path='/payment/:id' component={Payment} />
         <Route path='/profile/:id' component={Profile} />
         <Route exact path='/' component={Home} />
         <Route path='/room/:id' component={Room} />
         <Route path='/login' component={Login} />
-        <Route path='/finish' component={Finish} />
-        <Route path='/payment/:id' component={Payment} />
         <Route path='/explore' component={Explore} />
         <Route path='/good/:id' component={Good} />
       </Switch>

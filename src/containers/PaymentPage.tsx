@@ -3,8 +3,10 @@ import './payment.scss'
 import RoomIcon from '@material-ui/icons/Room';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
+import { useHistory, useParams } from 'react-router-dom'
 
 export default function Payment() {
+    const param = useParams()
     const [voucherShow, setVoucherShow] = useState(false)
     const [finalPrice, setFinalPrice] = useState(0)
     const [orderInfo, setOrderInfo] = useState({
@@ -28,6 +30,7 @@ export default function Payment() {
     })
     const [voucherList, setVoucherList] = useState([])
     useEffect(() => {
+        console.log(param)
         var order = {
             name: "iPhone12 mini",
             desc: "256GB硬盘 4G内存 5G通信技术",
@@ -119,10 +122,10 @@ export default function Payment() {
                 </div>
             </section>
             <section className="voucher-card">
-                <div className="title">dadasd</div>
-                <div className="item">XXXX：{orderInfo.id}</div>
+                <div className="title">订单信息</div>
+                <div className="item">订单编号：{orderInfo.id}</div>
                 <div className="item">创建时间：{orderInfo.createTime}</div>
-                <div className="item">xxx：<span>{voucher.type === '' ? '暂无' : voucher.type === 'reduction' ? `满 ${voucher.condition} 减 ${voucher.price}` : `满 ${voucher.condition} 打 ${voucher.discount * 10} 折`}</span> <Button className='action' color="secondary" onClick={(e) => { setVoucherShow(true) }}>去使用</Button>
+                <div className="item">优惠券：<span>{voucher.type === '' ? '暂无' : voucher.type === 'reduction' ? `满 ${voucher.condition} 减 ${voucher.price}` : `满 ${voucher.condition} 打 ${voucher.discount * 10} 折`}</span> <Button className='action' color="secondary" onClick={(e) => { setVoucherShow(true) }}>去使用</Button>
                 </div>
             </section>
             <section className="paybar">

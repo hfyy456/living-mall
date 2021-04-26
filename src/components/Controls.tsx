@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Chat from './Chat'
 import { IconButton, Button, Card, CardMedia, CardActions, Drawer, Avatar } from '@material-ui/core';
-
+import FlashSale from './FlashSale'
 interface Iparams {
   id: string
 }
@@ -114,7 +114,7 @@ export default function Controls(props: any): JSX.Element {
         </CardActions>
       </Card> : null}
       <Chat socket={socket} />
-      
+      <FlashSale />
       <div className="bottom-actions">
         <div className="input-container">
           <input onChange={(e) => {

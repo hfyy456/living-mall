@@ -1,3 +1,36 @@
-.flash-sale{
-    
+.flash-sale {
+  border: 1px solid #e5e5e5;
+  box-shadow:
+    0 0px 0.9px rgba(0, 0, 0, 0.036),
+    0 0px 3.1px rgba(0, 0, 0, 0.054),
+    0 0px 14px rgba(0, 0, 0, 0.09);
+  border-radius: 5px;
+  background: #ffffff;
+  position: fixed;
+  width: 40vw;
+  height: 30vh;
+  left: 50%;
+  top: 20%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  text-align: center;
+
+
+  .cover {
+    margin-top: 1vh;
+    width: 25vw;
+    height: 25vw;
+  }
+
+  .btn {
+    padding: 0vw;
+    font-size: 12px;
+    margin: auto;
+    margin-top: .5vh;
+
+  }
+
+  .price {
+    color: rgb(220, 0, 78);
+  }
 }
