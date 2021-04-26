@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoaded } from '../store/reducers/configSlice'
-import './about.scss'
 
 export default function Explore() {
   const dispatch = useDispatch()

@@ -7,7 +7,7 @@ import Room from './RoomPage'
 import Good from './GoodPage'
 import Login from './LoginPage'
 import Payment from './PaymentPage'
-
+import Finish from './FinishPage'
 import Explore from './ExplorePage'
 import './App.scss'
 
@@ -20,6 +20,7 @@ export default function RootRoute() {
         <Route exact path='/' component={Home} />
         <Route path='/room/:id' component={Room} />
         <Route path='/login' component={Login} />
+        <Route path='/finish' component={Finish} />
         <Route path='/payment/:id' component={Payment} />
         <Route path='/explore' component={Explore} />
         <Route path='/good/:id' component={Good} />

@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import md5 from 'blueimp-md5'
 import { useHistory } from 'react-router-dom'
 import service from '../utils/fetch'
-
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
@@ -48,7 +47,7 @@ export default function Login() {
         localStorage.setItem('token', res.token)
         history.push('/')
         localStorage.setItem('username', res.data.username)
-
+        localStorage.setItem('id', res.data.id)
       } else {
 
       }

@@ -1,26 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Controls.scss'
-import Avatar from '@material-ui/core/Avatar';
-import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import service from '../utils/fetch'
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import ForwardIcon from '@material-ui/icons/Forward';
 import { useParams } from 'react-router';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import { useHistory } from 'react-router-dom'
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Chat from './Chat'
+import { IconButton, Button, Card, CardMedia, CardActions, Drawer, Avatar } from '@material-ui/core';
+
 interface Iparams {
   id: string
 }
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
     maxHeight: '45vh'
   },
@@ -65,7 +60,7 @@ export default function Controls(props: any): JSX.Element {
   const handleOnCardClose = () => {
     setCardShow(false)
   }
-  const toggleDrawer = (pos: any, bool: Boolean) => {
+  const toggleDrawer = () => {
     setShopShow(false)
   }
   const handleSubmit = () => {
@@ -119,6 +114,7 @@ export default function Controls(props: any): JSX.Element {
         </CardActions>
       </Card> : null}
       <Chat socket={socket} />
+      
       <div className="bottom-actions">
         <div className="input-container">
           <input onChange={(e) => {
@@ -139,7 +135,7 @@ export default function Controls(props: any): JSX.Element {
       <Drawer classes={{
         paperAnchorBottom: classes.paperAnchorBottom,
         paper: classes.paper
-      }} className='drawer' anchor={'bottom'} open={shopShow} onClose={(e) => toggleDrawer('bottom', false)} >
+      }} className='drawer' anchor={'bottom'} open={shopShow} onClose={(e) => toggleDrawer()} >
         <Card className="shop-card">
           <CardMedia
             image="https://material-ui.com/static/images/cards/paella.jpg"
