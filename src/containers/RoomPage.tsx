@@ -4,7 +4,6 @@ import './room.scss'
 import videojs from 'video.js';
 import Modal from '@material-ui/core/Modal';
 import { useHistory } from 'react-router-dom'
-import { setLoaded } from '../store/reducers/configSlice'
 import Controls from '../components/Controls'
 import Paper from '@material-ui/core/Paper';
 import io from 'socket.io-client'
@@ -24,7 +23,6 @@ export default function Room(): JSX.Element {
   var namespace = 'http://127.0.0.1:5000/room'
   socket = io(namespace);
   const [open, setOpen] = React.useState(false);
-  const [info, setInfo] = useState(null)
 
   const handleOpen = () => {
     setOpen(true);
@@ -51,7 +49,7 @@ export default function Room(): JSX.Element {
       const newUrl = res.data.url
       if (isLiving) {
         console.log("++++++ living open ++++")
-        if (url != newUrl) {
+        if (url !== newUrl) {
           setOpen(false)
 
           player.src(newUrl)

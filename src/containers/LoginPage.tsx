@@ -17,7 +17,6 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 export default function Login() {
-  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -43,7 +42,7 @@ export default function Login() {
     }
     service.post('user/login', params).then((res: any) => {
       const code = res.code
-      if (code == 20000) {
+      if (code === 20000) {
         dispatch(setUserInfo(res.data))
         dispatch(setToken(res.token))
         localStorage.setItem('token', res.token)

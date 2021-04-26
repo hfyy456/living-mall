@@ -58,7 +58,6 @@ const useStyles_tabs = makeStyles((theme) => ({
 }));
 export default function Home() {
   const dispatch = useDispatch()
-  const [postList, setPostList] = useState([])
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const classes = useStyles();

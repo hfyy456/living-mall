@@ -13,9 +13,9 @@ export default function Bottombar(): JSX.Element {
 
   useEffect(() => {
     var path = location.pathname
-    if (path.indexOf('explore') != '-1') {
+    if (path.indexOf('explore') !== -1) {
       setValue("explore")
-    } else if (path.indexOf('profile') != '-1') {
+    } else if (path.indexOf('profile') !== -1) {
       setValue("profile")
     } else {
       setValue("home")

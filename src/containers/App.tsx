@@ -13,13 +13,12 @@ type Props = {
 
 function App(props: Props) {
   const path: any = useLocation()
-  const dispatch = useDispatch()
   const loading = useSelector(selectLoading)
   const theme: string = useSelector(selectTheme)
   const [showNav, setShowNav] = useState(false)
   const { children } = props;
   useEffect(() => {
-    if (path.pathname=='/') {
+    if (path.pathname == '/') {
       setShowNav(true)
     } else if (path.pathname.indexOf('/explore') !== -1) {
       setShowNav(true)

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   selectUserInfo
 } from '../store/reducers/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoaded } from '../store/reducers/configSlice'
 import './Profile.scss'
 import Basket from '../components/Basket'
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -19,7 +17,6 @@ import Divider from '@material-ui/core/Divider';
 import service from '../utils/fetch'
 
 export default function Profile() {
-  const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState({
     username: '',
     desc: '',

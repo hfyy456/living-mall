@@ -8518,6 +8518,11 @@ normalize-url@^3.0.0:
   resolved "https://registry.npm.taobao.org/normalize-url/download/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha1-suHE3E98bVd0PfczpPWXjRhlBVk=
 
+nplayer@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.nlark.com/nplayer/download/nplayer-0.1.9.tgz#b9f39cbef633f027070c6e540a0295dae70b59a4"
+  integrity sha1-ufOcvvYz8CcHDG5UCgKV2ucLWaQ=
+
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.npm.taobao.org/npm-run-path/download/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"

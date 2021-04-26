@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Living from '../components/Living'
 import './Concern.scss'
 export default function Concern() {

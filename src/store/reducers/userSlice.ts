@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../index';
-import { AppThunk } from '../index'
-import service from '../../utils/fetch'
-import { useHistory } from 'react-router-dom'
 
 const userSlice = createSlice({
 
