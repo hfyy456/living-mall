@@ -1,15 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import './payment.scss'
 import RoomIcon from '@material-ui/icons/Room';
-import Button from '@material-ui/core/Button';
-import Drawer from '@material-ui/core/Drawer';
+import { FormControl, MenuItem, InputLabel, Select, Button, Drawer, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom'
+import server from '../utils/fetch'
+import { makeStyles } from '@material-ui/core/styles';
 
+interface IParam {
+    id: string
+}
+interface Iorder {
+    name: string,
+    id: string,
+    price: number,
+    goodId: string,
+    cover: string,
+    desc: string,
+    num: number,
+    createTime: string,
+}
+const useStyles = makeStyles((theme) => ({
+    button: {
+        display: 'block',
+        marginTop: theme.spacing(2),
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+}));
 export default function Payment() {
-    const param = useParams()
+    const classes = useStyles();
+    const [remain, setRemain] = useState(0)
+    const [paywayList, setPaywayList] = useState([{ type: 'remain', text: "余额" }, { type: 'zfb', text: "支付宝" }, { type: 'wechat', text: "微信" }, { type: 'visa', text: "Visa" }])
+    const param: IParam = useParams()
+    const [payway, setPayway] = useState({ type: 'remain', text: "余额" })
+    const [selectOpen, setSelectOpen] = useState(false)
+    const [open, setOpen] = useState(false)
     const [voucherShow, setVoucherShow] = useState(false)
     const [finalPrice, setFinalPrice] = useState(0)
-    const [orderInfo, setOrderInfo] = useState({
+    const [orderInfo, setOrderInfo] = useState<Iorder>({
         name: '',
         id: "",
         price: 0,
@@ -30,17 +60,16 @@ export default function Payment() {
     })
     const [voucherList, setVoucherList] = useState([])
     useEffect(() => {
+        var order: Iorder
         console.log(param)
-        var order = {
-            name: "iPhone12 mini",
-            desc: "256GB硬盘 4G内存 5G通信技术",
-            goodId: '2321321321',
-            id: '21321321321',
-            createTime: "2012.2.12 19:40:20",
-            num: 1,
-            price: 6999,
-            cover: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1947490335,1153307990&fm=224&gp=0.jpg"
-        }
+        server.post('order/info', { id: param.id }).then((res: any) => {
+            if (res.code === 20000) {
+                order = res.data
+                setOrderInfo(order)
+                setFinalPrice(order.price)
+            }
+        })
+
         var list = [
             {
                 id: '',
@@ -62,9 +91,7 @@ export default function Payment() {
                 endTime: "2012.02.12",
             }
         ]
-        setOrderInfo(order)
         setVoucherList(list as never)
-        setFinalPrice(order.price)
     }, [])
     const toggleDrawer = (pos: any, bool: Boolean) => {
         setVoucherShow(false)
@@ -73,9 +100,33 @@ export default function Payment() {
         var finalOrder = {
             ...orderInfo,
             finalPrice: finalPrice,
-            voucherId: voucher.id
+            voucherId: voucher.id,
+            payway: payway.type
         }
+        server.post('order/pay', finalOrder).then((res: any) => {
+            console.log(res)
+        })
     }
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleSelectClose = () => {
+        setSelectOpen(false);
+    };
+    const handleSelectChange = (event: any) => {
+        console.log(event.target.value)
+        paywayList.forEach(elem => {
+            if (elem.text === event.target.value) {
+                setPayway(elem);
+            }
+        })
+    };
+    const handleSelectOpen = () => {
+        setSelectOpen(true);
+    };
     const selectVoucher = (item: any) => {
         console.log(item)
         setVoucher(item)
@@ -132,7 +183,7 @@ export default function Payment() {
                 <div className="total">
                     总计：<span className="price">{finalPrice}</span>
                 </div>
-                <Button variant="contained" color="secondary" onClick={handleSubmit}>
+                <Button variant="contained" color="secondary" onClick={handleClickOpen}>
                     提交订单
                 </Button>
             </section>
@@ -158,6 +209,43 @@ export default function Payment() {
 
                 </div>
             </Drawer>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">支付方式选择</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        你总共需要支付<span style={{ color: "rgb(220, 0, 78)" }} >{finalPrice}</span>元，请选择支付方式(默认余额)。
+                    </DialogContentText>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel id="demo-controlled-open-select-label">方式</InputLabel>
+                        <Select
+                            labelId="demo-controlled-open-select-label"
+                            id="demo-controlled-open-select"
+                            open={selectOpen}
+                            onClose={handleSelectClose}
+                            onOpen={handleSelectOpen}
+                            value={payway.text}
+                            onChange={handleSelectChange}
+                        >
+                            {
+                                paywayList.map((item, index) => {
+                                    return (
+                                        <MenuItem key={item.type} value={item.text}>{item.text}</MenuItem>
+                                    )
+                                })
+                            }
+                        </Select>
+                        <span className="remain">你的余额：<span>{remain}</span></span>
+                    </FormControl>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        取消
+                    </Button>
+                    <Button onClick={handleSubmit} color="primary">
+                        确认支付
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
