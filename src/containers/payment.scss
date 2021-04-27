@@ -24,7 +24,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    display: none;
 
     .name {
         font-weight: bold;
@@ -40,7 +39,6 @@
 .good-card {
     @extend .card;
     overflow: hidden;
-    display: none;
 
     .store-name {
         font-weight: bold;
@@ -96,7 +94,6 @@
 .voucher-card {
     @extend .card;
     padding: 3vh 4vw;
-    display: none;
 
     .title {
         font-size: 20px;
@@ -132,11 +129,9 @@
     box-sizing: border-box;
     background: #ffffff;
     display: flex;
-    //display: none;
 
     justify-content: flex-end;
     align-items: center;
-    // display: none;
 
     .total {
         margin-right: 3vw;

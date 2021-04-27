@@ -11,7 +11,7 @@ interface IParam {
 }
 interface Iorder {
     name: string,
-    id: string,
+    _id: string,
     price: number,
     goodId: string,
     cover: string,
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function Payment() {
+    const history = useHistory()
     const classes = useStyles();
     const [remain, setRemain] = useState(0)
     const [paywayList, setPaywayList] = useState([{ type: 'remain', text: "余额" }, { type: 'zfb', text: "支付宝" }, { type: 'wechat', text: "微信" }, { type: 'visa', text: "Visa" }])
@@ -41,7 +42,7 @@ export default function Payment() {
     const [finalPrice, setFinalPrice] = useState(0)
     const [orderInfo, setOrderInfo] = useState<Iorder>({
         name: '',
-        id: "",
+        _id: "",
         price: 0,
         goodId: '',
         cover: '',
@@ -69,7 +70,12 @@ export default function Payment() {
                 setFinalPrice(order.price)
             }
         })
-
+        server.post('user/info',).then((res: any) => {
+            if (res.code === 20000) {
+                var remain = res.data.remain
+                setRemain(remain)
+            }
+        })
         var list = [
             {
                 id: '',
@@ -105,6 +111,9 @@ export default function Payment() {
         }
         server.post('order/pay', finalOrder).then((res: any) => {
             console.log(res)
+            if (res.code === 20000) {
+                history.push('/finish')
+            }
         })
     }
     const handleClose = () => {
@@ -174,7 +183,7 @@ export default function Payment() {
             </section>
             <section className="voucher-card">
                 <div className="title">订单信息</div>
-                <div className="item">订单编号：{orderInfo.id}</div>
+                <div className="item">订单编号：{orderInfo._id}</div>
                 <div className="item">创建时间：{orderInfo.createTime}</div>
                 <div className="item">优惠券：<span>{voucher.type === '' ? '暂无' : voucher.type === 'reduction' ? `满 ${voucher.condition} 减 ${voucher.price}` : `满 ${voucher.condition} 打 ${voucher.discount * 10} 折`}</span> <Button className='action' color="secondary" onClick={(e) => { setVoucherShow(true) }}>去使用</Button>
                 </div>
