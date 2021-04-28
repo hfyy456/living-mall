@@ -1,47 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import { IconButton, AppBar, List, Divider, Avatar, ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import service from '../utils/fetch'
+import './order.scss'
+import ArrowBackIosIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
-      backgroundColor: theme.palette.background.paper,
+        width: '100%',
+        paddingTop: "14vw",
+        backgroundColor: theme.palette.background.paper,
     },
-  }));
+}));
+interface Iorder {
+    name: string,
+    createTime: string,
+    _id: string,
+    cover: string
+}
 export default function Order() {
+    const [list, setList] = useState<Array<Iorder>>([])
     const classes = useStyles();
-
-
+    useEffect(() => {
+        service.post('order/list', {}).then((res: any) => {
+            setList(res.data)
+        })
+    }, [])
     return (
-        <div><List className={classes.root}>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <ImageIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <WorkIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Work" secondary="Jan 7, 2014" />
-            </ListItem>
-            <ListItem>
-                <ListItemAvatar>
-                    <Avatar>
-                        <BeachAccessIcon />
-                    </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Vacation" secondary="July 20, 2014" />
-            </ListItem>
-        </List></div>
+        <div>
+            <AppBar>
+                <IconButton aria-label="ArrowBack">
+                    <ArrowBackIosIcon />
+                </IconButton>
+            </AppBar>
+            <List className={classes.root}>
+                {list.map((item, index) => {
+                    return <div> <ListItem key={index}>
+                        <ListItemAvatar>
+                            <Avatar variant="square" src={item?.cover} >
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={item?.name} secondary={item?.createTime} />
+                        <div className="status-tag">
+                            支付成功
+                        </div>
+                    </ListItem>
+                        <Divider />
+                    </div>
+                })}
+            </List>
+        </div>
     )
 
 }
