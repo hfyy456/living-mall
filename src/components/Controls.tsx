@@ -69,10 +69,12 @@ export default function Controls(props: any): JSX.Element {
   }
   const addCart = () => {
     var params = {
-      goodId: cardInfo.id
+      // goodId: cardInfo.id
+      goodId: "6086f3ba81ef614892d73152"
+
     }
     service.post('basket/addCart', params).then((res: any) => {
-
+      console.log()
     })
   }
   return (

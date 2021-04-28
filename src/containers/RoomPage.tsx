@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import './room.scss'
 import videojs from 'video.js';
@@ -23,10 +23,6 @@ export default function Room(): JSX.Element {
   var namespace = 'http://127.0.0.1:5000/room'
   socket = io(namespace);
   const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);

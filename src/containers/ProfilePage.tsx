@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-  selectUserInfo
-} from '../store/reducers/userSlice';
 import './Profile.scss'
 import Basket from '../components/Basket'
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -26,7 +23,7 @@ export default function Profile() {
   useEffect(() => {
     service.post('user/info', {}).then((res: any) => {
       const code = res.code
-      if (code == 20000) {
+      if (code === 20000) {
         setUserInfo(res.data)
         localStorage.setItem('username', res.data.username)
 
@@ -34,13 +31,14 @@ export default function Profile() {
 
       }
     })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <div className='proflie-container'>
       <div className="personal-infor">
         <div>
-          <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" className="avatar"></img>
+          <img alt="avatar" src="https://material-ui.com/static/images/cards/live-from-space.jpg" className="avatar"></img>
         </div>
         <div className="sec">
           <div className="username">{userInfo.username}</div>

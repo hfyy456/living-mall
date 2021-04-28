@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './payment.scss'
 import RoomIcon from '@material-ui/icons/Room';
-import { FormControl, MenuItem, InputLabel, Select, Button, Drawer, TextField, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
+import { Snackbar, FormControl, MenuItem, InputLabel, Select, Button, Drawer, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom'
 import server from '../utils/fetch'
+import { Alert } from '@material-ui/lab';
+
 import { makeStyles } from '@material-ui/core/styles';
 
 interface IParam {
@@ -32,8 +34,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Payment() {
     const history = useHistory()
     const classes = useStyles();
+    const paywayList = [{ type: 'remain', text: "余额" }, { type: 'zfb', text: "支付宝" }, { type: 'wechat', text: "微信" }, { type: 'visa', text: "Visa" }]
+    const [message, setMessage] = useState('')
+    const [messageBar, setMessageBar] = useState(false)
     const [remain, setRemain] = useState(0)
-    const [paywayList, setPaywayList] = useState([{ type: 'remain', text: "余额" }, { type: 'zfb', text: "支付宝" }, { type: 'wechat', text: "微信" }, { type: 'visa', text: "Visa" }])
     const param: IParam = useParams()
     const [payway, setPayway] = useState({ type: 'remain', text: "余额" })
     const [selectOpen, setSelectOpen] = useState(false)
@@ -113,6 +117,9 @@ export default function Payment() {
             console.log(res)
             if (res.code === 20000) {
                 history.push('/finish')
+            } else {
+                setMessage(res.message)
+                setMessageBar(true)
             }
         })
     }
@@ -136,12 +143,17 @@ export default function Payment() {
     const handleSelectOpen = () => {
         setSelectOpen(true);
     };
+    const handleMessageClose = (event: any, reason: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setMessageBar(false);
+    };
     const selectVoucher = (item: any) => {
         console.log(item)
         setVoucher(item)
         setVoucherShow(false)
         var price = orderInfo.price
-        var newOrder = orderInfo
         if (item.type === "discount") {
             price = price * item.discount
         } else {
@@ -151,6 +163,12 @@ export default function Payment() {
     }
     return (
         <div className="payment">
+            <Snackbar anchorOrigin={{ horizontal: "center", vertical: "top" }}
+                open={messageBar} autoHideDuration={6000} onClose={handleMessageClose}>
+                <Alert severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
             <section className="path-card">
                 <span>
                     <RoomIcon style={{ fontSize: "30px", color: "rgb(220, 0, 78)" }} />

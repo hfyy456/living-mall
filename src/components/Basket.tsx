@@ -7,11 +7,38 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
+import service from '../utils/fetch'
+import { useHistory } from 'react-router-dom'
 
 export default function Basket() {
-  const [checkedAll, setCheckedAll] = React.useState(true);
-  const [checked, setChecked] = React.useState([1]);
+  const history = useHistory();
 
+  const [basketList, setBasketList] = useState([
+    {
+      good: {
+        price: 0,
+        name: '',
+        images: [''],
+        _id: ''
+      },
+      items: []
+    }
+  ])
+  const [checkedAll, setCheckedAll] = React.useState(false);
+  const [checked, setChecked] = React.useState([0]);
+  useEffect(() => {
+    service.post('basket/list', {}).then((res: any) => {
+      if (res.code === 20000) {
+        var ary = []
+        for (const item in res.data) {
+          ary.push(res.data[item])
+          console.log(item)
+        }
+        setBasketList(ary as never)
+
+      }
+    })
+  }, [])
   const handleToggle = (value: any) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -24,6 +51,9 @@ export default function Basket() {
 
     setChecked(newChecked);
   };
+  const handleOnClick = (id: string) => {
+    history.push(`/good/${id}`)
+  }
   const handleChange = (event: any) => {
     setChecked(event.target.checked);
   };
@@ -35,131 +65,52 @@ export default function Basket() {
           onChange={handleChange}
           inputProps={{ 'aria-label': 'primary checkbox' }}
         />
-        <span>XXXDE小店</span>
+        <span>admin的自营店</span>
       </div>
       <div className="basket-content">
         <List dense >
-          <ListItem className="basket-item">
-            <ListItemIcon style={{ minWidth: 0 }}>
-              <Checkbox
-                edge="start"
-                onChange={handleToggle(1)}
-                checked={checked.indexOf(1) !== -1}
-              />
-            </ListItemIcon>
-            <div className="cover">
-              <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" />
-            </div>
-            <div className="infor">
-              <div className="name">laoliwuxaingya</div>
-              <div className="price">
-                ￥29.0
-              </div>
-            </div>
-            <TextField
-              id="standard-number"
-              type="number"
-              className="item-num"
-              defaultValue="1"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">X</InputAdornment>,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </ListItem>            <ListItem className="basket-item">
+          {
+            basketList.map((item, index) => {
+              return (
+                <div key={index}>
+                  <ListItem className="basket-item">
+                    <ListItemIcon style={{ minWidth: 0 }}>
+                      <Checkbox
+                        edge="start"
+                        onChange={handleToggle(1)}
+                        checked={checked.indexOf(1) !== -1}
+                      />
+                    </ListItemIcon>
+                    <div onClick={e => handleOnClick(item.good._id)} className="cover">
+                      <img src={item.good.images[0]} />
+                    </div>
+                    <div className="infor">
+                      <div className="name">{item.good.name}</div>
+                      <div className="price">
+                        ￥{item.good.price}
+                      </div>
+                    </div>
+                    <TextField
+                      id="standard-number"
+                      type="number"
+                      className="item-num"
+                      defaultValue={item.items.length}
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">X</InputAdornment>,
+                      }}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </ListItem>
+                </div>
+              )
+            })
+          }
 
-            <ListItemIcon style={{ minWidth: 0 }}>
-              <Checkbox
-                edge="start"
-                onChange={handleToggle(1)}
-                checked={checked.indexOf(1) !== -1}
-              />
-            </ListItemIcon>
-            <div className="cover">
-              <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" />
-            </div>
-            <div className="infor">
-              <div className="name">laoliwuxaingya</div>
-              <div className="price">
-                ￥29.0
-              </div>
-            </div>
-            <TextField
-              id="standard-number"
-              type="number"
-              className="item-num"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">X</InputAdornment>,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </ListItem>
-          <ListItem className="basket-item">
-
-            <ListItemIcon style={{ minWidth: 0 }}>
-              <Checkbox
-                edge="start"
-                onChange={handleToggle(1)}
-                checked={checked.indexOf(1) !== -1}
-              />
-            </ListItemIcon>
-            <div className="cover">
-              <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" />
-            </div>
-            <div className="infor">
-              <div className="name">laoliwuxaingya</div>
-              <div className="price">
-                ￥29.0
-              </div>
-            </div>
-            <TextField
-              id="standard-number"
-              type="number"
-              className="item-num"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">X</InputAdornment>,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </ListItem>
-          <ListItem className="basket-item">
-            <ListItemIcon style={{ minWidth: 0 }}>
-              <Checkbox
-                edge="start"
-                onChange={handleToggle(1)}
-                checked={checked.indexOf(1) !== -1}
-              />
-            </ListItemIcon>
-            <div className="cover">
-              <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" />
-            </div>
-            <div className="infor">
-              <div className="name">laoliwuxaingya</div>
-              <div className="price">
-                ￥29.0
-              </div>
-            </div>
-            <TextField
-              id="standard-number"
-              type="number"
-              className="item-num"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">X</InputAdornment>,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </ListItem>
         </List>
         <div className="basket-footer" >
-          <span className='total'>合计：12元</span>
+          <span className='total'>合计：0元</span>
           <Button variant="contained" color="secondary">
             结算
           </Button>

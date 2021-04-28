@@ -1,9 +1,9 @@
 import React from 'react';
 import './login.scss'
 import {
-  setUserInfo, selectUserInfo, setToken
+  setUserInfo, setToken
 } from '../store/reducers/userSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 import md5 from 'blueimp-md5'
 import { useHistory } from 'react-router-dom'
 import service from '../utils/fetch'

@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import './App.scss';
-import { selectLoading, selectTheme, setLoading } from '../store/reducers/configSlice'
-import { useDispatch, useSelector } from 'react-redux';
+import { selectLoading, selectTheme } from '../store/reducers/configSlice'
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import Tools from '../components/Tools';
 import Loading from '../components/Loading'
@@ -18,7 +18,7 @@ function App(props: Props) {
   const [showNav, setShowNav] = useState(false)
   const { children } = props;
   useEffect(() => {
-    if (path.pathname == '/') {
+    if (path.pathname === '/') {
       setShowNav(true)
     } else if (path.pathname.indexOf('/explore') !== -1) {
       setShowNav(true)
