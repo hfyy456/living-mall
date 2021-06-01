@@ -20,6 +20,8 @@ interface Iorder {
     desc: string,
     num: number,
     createTime: string,
+    phoneNumber: string,
+    location: string,
 }
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -53,6 +55,8 @@ export default function Payment() {
         desc: '',
         num: 0,
         createTime: '',
+        phoneNumber: '',
+        location: '',
     })
     const [voucher, setVoucher] = useState({
         id: '2321321',
@@ -111,7 +115,9 @@ export default function Payment() {
             ...orderInfo,
             finalPrice: finalPrice,
             voucherId: voucher.id,
-            payway: payway.type
+            payway: payway.type,
+            location: "广东省广州市天河区梅园东路222号",
+            phoneNumber: "13588742046",
         }
         server.post('order/pay', finalOrder).then((res: any) => {
             console.log(res)
@@ -175,10 +181,10 @@ export default function Payment() {
                 </span>
                 <span>
                     <div style={{ "marginLeft": "1vw" }}>
-                        <span className='name'>aaa</span>
-                        <span className='phone'>    111111111</span>
+                        <span className='name'>阿达</span>
+                        <span className='phone'>13588742046</span>
                     </div>
-                    <div style={{ "marginLeft": "1vw" }} className="location">啊撒大苏打实打实大大实打实的</div>
+                    <div style={{ "marginLeft": "1vw" }} className="location">广东省广州市天河区梅园东路222号</div>
                 </span>
                 <span><Button variant="outlined">修改</Button>
                 </span>

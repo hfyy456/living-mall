@@ -20,6 +20,7 @@ interface IInfo {
   name: string,
   desc: string,
   owner: string,
+  _id: string,
   images: Array<any>
 }
 interface IStore {
@@ -57,6 +58,19 @@ export default function Good() {
   }, [])
   const goRoom = () => {
     history.push(`/room/${store?.roomId}`)
+  }
+  const back = () => {
+    history.go(-1)
+  }
+  const handleSubmit = () => {
+    service.post('order/create', {
+      id: info?._id,
+      num: 1,
+      type: ""
+    }).then((res: any) => {
+      const _id = res.data._id
+      history.push(`/payment/${_id}`)
+    })
   }
   return (
     <div className='good-container'>
@@ -109,9 +123,10 @@ export default function Good() {
         </section>
       </section>
       <section className="action-table">
+        <Button className="action-back" onClick={back} >&lt;返回</Button>
         <ButtonGroup disableElevation variant="contained" color="secondary">
           <Button >加入购物车</Button>
-          <Button >立即购买</Button>
+          <Button onClick={handleSubmit} >立即购买</Button>
         </ButtonGroup>
       </section>
       <ShopCard follower={store?.follower} cover={store?.cover} name={store?.username} id={store?._id} />

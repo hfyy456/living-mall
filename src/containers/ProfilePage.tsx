@@ -12,14 +12,23 @@ import PagesIcon from '@material-ui/icons/Pages';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import Divider from '@material-ui/core/Divider';
 import service from '../utils/fetch'
+import { useHistory } from 'react-router-dom'
 
 export default function Profile() {
+  const history = useHistory()
+
   const [userInfo, setUserInfo] = useState({
     username: '',
     desc: '',
     level: '',
     avatar: '',
   })
+  const pushOrder = () => {
+    history.push('/order')
+  }
+  const pushSetting = () => {
+    history.push('/setting/1')
+  }
   useEffect(() => {
     service.post('user/info', {}).then((res: any) => {
       const code = res.code
@@ -45,7 +54,7 @@ export default function Profile() {
           <div className="desc">{userInfo.desc}</div>
           <div className="level">Lv.{userInfo.level}</div>
         </div>
-        <SettingsIcon className="setting" />
+        <SettingsIcon onClick={pushSetting} className="setting" />
       </div>
       <div className="order-card">
         <div className="sub-list">
@@ -82,7 +91,7 @@ export default function Profile() {
             <div className="name">退款售后</div>
 
           </div>
-          <div className="type">
+          <div onClick={pushOrder} className="type">
             <ListAltIcon />
             <div className="name">所有订单</div>
           </div>

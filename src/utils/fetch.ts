@@ -10,6 +10,7 @@ class Xfetch {
   async post(api: any, params: any) {
     let url = this.baseUrl + api
     let data = JSON.stringify(params)
+    console.log(typeof data)
     const token = localStorage.getItem('token')
     var headers
     if (token) {
@@ -48,6 +49,6 @@ class Xfetch {
 }
 //const baseUrl = 'https://www.hfsblog.com/api/'
 
-const baseUrl = 'http://127.0.0.1:10086/api/'
+const baseUrl = 'http://192.168.240.7:10086/api/'
 const service: any = new Xfetch(baseUrl)
 export default service

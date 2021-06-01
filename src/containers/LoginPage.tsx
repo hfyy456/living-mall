@@ -3,7 +3,7 @@ import './login.scss'
 import {
   setUserInfo, setToken
 } from '../store/reducers/userSlice';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import md5 from 'blueimp-md5'
 import { useHistory } from 'react-router-dom'
 import service from '../utils/fetch'

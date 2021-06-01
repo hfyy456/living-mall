@@ -76,7 +76,7 @@ export default function Home() {
     setTimeout(() => {
       dispatch(setLoaded())
     }, 300);
-    var namespace = 'http://127.0.0.1:5000/home'
+    var namespace = 'http://192.168.240.7:5000/home'
     var socket = io(namespace);
     socket.on('connect', function () {
       socket.emit('my_event', { data: 'I\'m connected!' });

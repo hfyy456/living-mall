@@ -38,6 +38,6 @@ class Zfetch {
 }
 //const baseUrl = 'https://www.hfsblog.com/api/'
 
-const baseUrl = 'http://127.0.0.1:5000/api/'
+const baseUrl = 'http://192.168.240.7:5000/api/'
 const service_ad: any = new Zfetch(baseUrl)
 export default service_ad

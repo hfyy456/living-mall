@@ -1,0 +1,17 @@
+.message-title {
+    height: 8vh;
+    width: 100vw;
+    background-color: rgb(220, 0, 78);
+    font-size: 24px;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-msg {
+    color: gray;
+    position: absolute;
+    top: 1.8vh;
+    right: 1vw;
+}

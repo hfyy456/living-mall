@@ -15,6 +15,16 @@ import FlashSale from './FlashSale'
 interface Iparams {
   id: string
 }
+interface IGood {
+  sales: number,
+  oprice: number,
+  price: number,
+  name: string,
+  desc: string,
+  owner: string,
+  images: Array<any>
+  _id: string
+}
 const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
     maxHeight: '45vh'
@@ -32,6 +42,8 @@ export default function Controls(props: any): JSX.Element {
   const history = useHistory();
   const [cardShow, setCardShow] = useState(false)
   const [shopShow, setShopShow] = useState(false)
+  const [goods, setGoods] = useState<Array<IGood>>([])
+
   const [cardInfo, setCardInfo] = useState({
     name: '',
     images: [],
@@ -42,6 +54,10 @@ export default function Controls(props: any): JSX.Element {
   const [info, setInfo] = useState({ owner: 'null', currentViewers: 0 })
   const [inputValue, setInputValue] = useState('')
   useEffect(() => {
+    service.post('good/list', {}).then((res: any) => {
+      console.log(res.data)
+      setGoods(res.data)
+    })
     socket.on('card', function (msg: any) {
       console.log("+++++ card +++++")
       const res = JSON.parse(msg)
@@ -52,7 +68,6 @@ export default function Controls(props: any): JSX.Element {
       const res = JSON.parse(msg)
       setInfo(res.data.info)
     })
-
   }, [])
   const handleOnClose = () => {
     history.push(`/`)
@@ -63,18 +78,20 @@ export default function Controls(props: any): JSX.Element {
   const toggleDrawer = () => {
     setShopShow(false)
   }
+  const handleOnClick = (id: string) => {
+    history.push(`/good/${id}`)
+  }
   const handleSubmit = () => {
 
-    socket.emit('message', { data: { room: id, content: inputValue, username: username } })
+    socket.emit('message', { data: { room: id, content: inputValue, username: username, type: "message" } })
   }
   const addCart = () => {
     var params = {
-      // goodId: cardInfo.id
-      goodId: "6086f3ba81ef614892d73152"
-
+      goodId: cardInfo.id,
+      num: 1
     }
     service.post('basket/addCart', params).then((res: any) => {
-      console.log()
+      alert("添加成功")
     })
   }
   return (
@@ -116,7 +133,7 @@ export default function Controls(props: any): JSX.Element {
         </CardActions>
       </Card> : null}
       <Chat socket={socket} />
-      <FlashSale />
+      <FlashSale socket={socket} />
       <div className="bottom-actions">
         <div className="input-container">
           <input onChange={(e) => {
@@ -138,24 +155,28 @@ export default function Controls(props: any): JSX.Element {
         paperAnchorBottom: classes.paperAnchorBottom,
         paper: classes.paper
       }} className='drawer' anchor={'bottom'} open={shopShow} onClose={(e) => toggleDrawer()} >
-        <Card className="shop-card">
-          <CardMedia
-            image="https://material-ui.com/static/images/cards/paella.jpg"
-            title="Paella dish"
-            className="shop-cover"
-          />
-          <div>
-            <div className="shop-name">啊大苏打实打实的撒打算</div>
-            <div className="shop-price">
-              ￥2,000
-          </div>
-          </div>
-          <CardActions className='shop-actions' disableSpacing>
-            <IconButton className="shop-cart-button" aria-label="add to favorites">
-              <ForwardIcon />
-            </IconButton >
-          </CardActions>
-        </Card>
+        {
+          goods.length > 0 && goods.map((item, index) => (
+            <Card key={index} className="shop-card">
+              <CardMedia
+                image={item?.images[0]}
+                title="Paella dish"
+                className="shop-cover"
+              />
+              <div>
+                <div className="shop-name">{item?.name}</div>
+                <div className="shop-price">
+                  ￥{item?.price}
+                </div>
+              </div>
+              <CardActions className='shop-actions' disableSpacing>
+                <IconButton onClick={(e) => handleOnClick(item._id)} className="shop-cart-button" aria-label="add to favorites">
+                  <ForwardIcon />
+                </IconButton >
+              </CardActions>
+            </Card>
+          ))
+        }
       </Drawer>
     </div >
   )

@@ -17,7 +17,9 @@ export default function Bottombar(): JSX.Element {
       setValue("explore")
     } else if (path.indexOf('profile') !== -1) {
       setValue("profile")
-    } else {
+    } else if(path.indexOf('message') !== -1){
+        setValue("message")
+    }else {
       setValue("home")
     }
   }, [location])

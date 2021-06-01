@@ -9,7 +9,9 @@ function Chat(props: any) {
     socket.on('recive_msg', function (msg: any) {
       const res = JSON.parse(msg)
       console.log(res.data)
-      appendList(res.data)
+      if (res.data.type != 'admin') {
+        appendList(res.data)
+      }
     })
     return (() => {
     })
@@ -24,7 +26,7 @@ function Chat(props: any) {
       {   msgs.map((item: any, index: any) => {
         return <div key={index} className="message-item">
           {item.type == 'message' ? <span> {`${item.username} ${item.content}`}</span> :
-            (item.type == 'join' ? <span> {`${item.content}`}</span> : <span>{item.content}</span>)
+            (item.type == 'join' || item.type == 'broadcast' ? <span> {`公告：${item.content}`}</span> : <span>{item.content}</span>)
           }
         </div>
       })}

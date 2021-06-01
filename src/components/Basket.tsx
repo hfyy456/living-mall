@@ -34,6 +34,7 @@ export default function Basket() {
           ary.push(res.data[item])
           console.log(item)
         }
+        console.log(ary)
         setBasketList(ary as never)
 
       }
@@ -94,7 +95,7 @@ export default function Basket() {
                       id="standard-number"
                       type="number"
                       className="item-num"
-                      defaultValue={item.items.length}
+                      defaultValue={1}
                       InputProps={{
                         startAdornment: <InputAdornment position="start">X</InputAdornment>,
                       }}

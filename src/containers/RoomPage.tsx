@@ -17,38 +17,36 @@ export default function Room(): JSX.Element {
   const id = params.id
   const username = localStorage.getItem("username")
   const history = useHistory()
-
   let socket: any = null
   let url = ''
-  var namespace = 'http://127.0.0.1:5000/room'
+  var namespace = 'http://192.168.123.129:5000/room'
   socket = io(namespace);
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
-  const handleBack = ()=>{
+  const handleBack = () => {
     history.goBack()
   }
   useEffect(() => {
     console.log(params)
     var player = videojs('video-player')
-
     socket.on('connect', function () {
-      socket.emit('join', { data: { username: username, room: id } });
+      socket.emit('join', { data: { username: username, room: id, type: "user" } });
       socket.emit('info', { data: { room: id } })
     });
     socket.on('living', function (msg: any) {
       console.log("+++++++  LIVING  ++++++++\n", msg)
       const res = JSON.parse(msg)
       const isLiving = res.data.living
-      const newUrl = res.data.url
+      const newUrl = "http://127.0.0.1/live_hls/123.m3u8"
       if (isLiving) {
         console.log("++++++ living open ++++")
         if (url !== newUrl) {
           setOpen(false)
 
-          player.src(newUrl)
+          player.src("http://127.0.0.1/live_hls/123.m3u8")
           player.play()
           url = newUrl
         }
@@ -56,9 +54,9 @@ export default function Room(): JSX.Element {
       } else {
         setOpen(true)
         console.log("++++++ living close ++++")
-        player.pause()
+        //player.pause()
         url = "www.izhaoo.com/live"
-        player.src(url)
+        //  player.src(url)
       }
 
     });
@@ -79,7 +77,9 @@ export default function Room(): JSX.Element {
       }
     })
     return () => {
+      socket.emit('leave', { data: { username: username, room: id, type: "user" } });
       socket.close()
+      player.dispose()
     }
   }, [])
   return (
@@ -95,7 +95,8 @@ export default function Room(): JSX.Element {
           </p>
           <div> <Button onClick={handleBack} className="submit" variant="contained" color="secondary">
             返回
-        </Button></div>
+        </Button>
+          </div>
         </Paper>
       </Modal>
       <Controls socket={socket} />

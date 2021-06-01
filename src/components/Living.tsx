@@ -11,8 +11,8 @@ export default function Living(props: any) {
     history.push(`/room/${id}`)
   }
   return (
-    <div onClick={handleClick} className="living-container">
-      <div className="living-card">
+    <div className="living-container">
+      <div className="living-card" onClick={handleClick}>
 
         <div className="cover-wrapper">
           <img src="https://material-ui.com/static/images/cards/live-from-space.jpg" />

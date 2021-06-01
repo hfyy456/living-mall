@@ -10,6 +10,9 @@ import Payment from './PaymentPage'
 import Finish from './FinishPage'
 import Explore from './ExplorePage'
 import Order from './OrderPage'
+import Message from './MessagePage'
+import Chat from './ChatPage'
+import Setting from './SettingPage'
 
 import './App.scss'
 
@@ -26,7 +29,11 @@ export default function RootRoute() {
         <Route path='/login' component={Login} />
         <Route path='/Order' component={Order} />
         <Route path='/explore' component={Explore} />
+        <Route path='/message' component={Message} />
         <Route path='/good/:id' component={Good} />
+        <Route path='/chat/:id' component={Chat} />
+        <Route path='/setting/:id' component={Setting} />
+
       </Switch>
     </App>
   )

@@ -8,7 +8,7 @@
   background: #ffffff;
   position: fixed;
   width: 40vw;
-  height: 30vh;
+  height: 35vh;
   left: 50%;
   top: 20%;
   transform: translateX(-50%);
@@ -32,5 +32,10 @@
 
   .price {
     color: rgb(220, 0, 78);
+  }
+  .card-close{
+    position: absolute;
+    right:-10px;
+    top:-10px;
   }
 }
